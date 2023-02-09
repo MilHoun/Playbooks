@@ -1,0 +1,17 @@
+---
+- name: Ensure Selinux is permissive
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Ensure config is updated
+  template:
+    src: httpd.j2
+    dest: /etc/httpd/conf/httpd.conf
+  notify:
+    - restart httpd  
+
+- name: Update Sample page
+  copy:
+    src: info.html
+    dest: /var/www/html/info.html
